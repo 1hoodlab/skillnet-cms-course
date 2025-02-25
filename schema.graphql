@@ -339,6 +339,7 @@ type Course {
   discountEvents(where: DiscountEventWhereInput! = {}, orderBy: [DiscountEventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DiscountEventWhereUniqueInput): [DiscountEvent!]
   discountEventsCount(where: DiscountEventWhereInput! = {}): Int
   teacher: Teacher
+  visible: Boolean
 }
 
 type Course_content_Document {
@@ -380,6 +381,7 @@ input CourseWhereInput {
   categories: CategoryManyRelationFilter
   discountEvents: DiscountEventManyRelationFilter
   teacher: TeacherWhereInput
+  visible: BooleanFilter
 }
 
 input LessonManyRelationFilter {
@@ -417,6 +419,11 @@ input DiscountEventManyRelationFilter {
   none: DiscountEventWhereInput
 }
 
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
 input CourseOrderByInput {
   id: OrderDirection
   title: OrderDirection
@@ -424,6 +431,7 @@ input CourseOrderByInput {
   description: OrderDirection
   price: OrderDirection
   currency: OrderDirection
+  visible: OrderDirection
 }
 
 input CourseUpdateInput {
@@ -439,6 +447,7 @@ input CourseUpdateInput {
   categories: CategoryRelateToManyForUpdateInput
   discountEvents: DiscountEventRelateToManyForUpdateInput
   teacher: TeacherRelateToOneForUpdateInput
+  visible: Boolean
 }
 
 input LessonRelateToManyForUpdateInput {
@@ -500,6 +509,7 @@ input CourseCreateInput {
   categories: CategoryRelateToManyForCreateInput
   discountEvents: DiscountEventRelateToManyForCreateInput
   teacher: TeacherRelateToOneForCreateInput
+  visible: Boolean
 }
 
 input LessonRelateToManyForCreateInput {
@@ -653,6 +663,7 @@ type User {
   name: String
   email: String
   password: PasswordState
+  isAdmin: Boolean
   createdAt: DateTime
 }
 
@@ -672,6 +683,7 @@ input UserWhereInput {
   id: IDFilter
   name: StringFilter
   email: StringFilter
+  isAdmin: BooleanFilter
   createdAt: DateTimeNullableFilter
 }
 
@@ -679,6 +691,7 @@ input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
+  isAdmin: OrderDirection
   createdAt: OrderDirection
 }
 
@@ -686,6 +699,7 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  isAdmin: Boolean
   createdAt: DateTime
 }
 
@@ -698,6 +712,7 @@ input UserCreateInput {
   name: String
   email: String
   password: String
+  isAdmin: Boolean
   createdAt: DateTime
 }
 
@@ -772,7 +787,6 @@ type UserAuthenticationWithPasswordFailure {
 }
 
 input CreateInitialUserInput {
-  name: String
   email: String
   password: String
 }

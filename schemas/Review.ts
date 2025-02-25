@@ -6,9 +6,10 @@ import {
   text,
   timestamp,
 } from "@keystone-6/core/fields";
+import { accessControl } from "./User";
 
 export const Review = list({
-  access: allowAll,
+  access: accessControl,
   fields: {
     course: relationship({
       ref: "Course.reviews",

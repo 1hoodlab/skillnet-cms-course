@@ -1,9 +1,10 @@
 import { list } from "@keystone-6/core";
 import { allowAll } from "@keystone-6/core/access";
 import { float, text } from "@keystone-6/core/fields";
+import { accessControl } from "./User";
 
 export const Currency = list({
-  access: allowAll,
+  access: accessControl,
   fields: {
     name: text({
       validation: { isRequired: true },

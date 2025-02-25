@@ -5,3 +5,5 @@ keystone.db
 /public/uploads/teachers/*
 
 /public/uploads/courses/*
+
+.env

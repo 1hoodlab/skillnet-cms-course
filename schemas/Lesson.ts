@@ -2,9 +2,10 @@ import { list } from "@keystone-6/core";
 import { allowAll } from "@keystone-6/core/access";
 import { text, relationship, integer } from "@keystone-6/core/fields";
 import { document } from "@keystone-6/fields-document";
+import { accessControl } from "./User";
 
 export const Lesson = list({
-  access: allowAll,
+  access: accessControl,
   fields: {
     title: text({
       validation: { isRequired: true },

@@ -1,9 +1,10 @@
 import { list } from "@keystone-6/core";
 import { allowAll } from "@keystone-6/core/access";
 import { text, relationship } from "@keystone-6/core/fields";
+import { accessControl } from "./User";
 
 export const Category = list({
-  access: allowAll,
+  access: accessControl,
   fields: {
     name: text({
       validation: { isRequired: true },

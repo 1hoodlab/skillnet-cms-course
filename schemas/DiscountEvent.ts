@@ -7,9 +7,10 @@ import {
   relationship,
   float,
 } from "@keystone-6/core/fields";
+import { accessControl } from "./User";
 
 export const DiscountEvent = list({
-  access: allowAll,
+  access: accessControl,
   fields: {
     title: text({
       validation: { isRequired: true },
