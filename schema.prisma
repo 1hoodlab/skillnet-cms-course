@@ -11,28 +11,93 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Lesson {
+  id       String  @id @default(cuid())
+  title    String  @default("")
+  course   Course? @relation("Lesson_course", fields: [courseId], references: [id])
+  courseId String? @map("course")
+  content  String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  videoUrl String  @default("")
+  order    Int?    @default(1)
+
+  @@index([courseId])
+}
+
+model Review {
+  id           String    @id @default(cuid())
+  course       Course?   @relation("Review_course", fields: [courseId], references: [id])
+  courseId     String?   @map("course")
+  reviewerName String    @default("")
+  rating       Int
+  comment      String    @default("")
+  createdAt    DateTime? @default(now())
+
+  @@index([courseId])
+}
+
+model Currency {
+  id           String @id @default(cuid())
+  name         String @default("")
+  code         String @unique @default("")
+  exchangeRate Float? @default(1)
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @default("")
+  description String   @default("")
+  courses     Course[] @relation("Category_courses")
+}
+
+model Course {
+  id                  String          @id @default(cuid())
+  title               String          @default("")
+  slug                String          @default("")
+  description         String          @default("")
+  content             String          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  lessons             Lesson[]        @relation("Lesson_course")
+  reviews             Review[]        @relation("Review_course")
+  price               Float           @default(0)
+  currency            String          @default("VND")
+  thumbnail_id        String?
+  thumbnail_filesize  Int?
+  thumbnail_width     Int?
+  thumbnail_height    Int?
+  thumbnail_extension String?
+  categories          Category[]      @relation("Category_courses")
+  discountEvents      DiscountEvent[] @relation("Course_discountEvents")
+  teacher             Teacher?        @relation("Course_teacher", fields: [teacherId], references: [id])
+  teacherId           String?         @map("teacher")
+
+  @@index([teacherId])
+}
+
+model DiscountEvent {
+  id                 String   @id @default(cuid())
+  title              String   @default("")
+  discountPercentage Float
+  startDate          DateTime
+  endDate            DateTime
+  courses            Course[] @relation("Course_discountEvents")
+}
+
+model Teacher {
+  id               String   @id @default(cuid())
+  name             String   @default("")
+  email            String   @default("")
+  avatar_id        String?
+  avatar_filesize  Int?
+  avatar_width     Int?
+  avatar_height    Int?
+  avatar_extension String?
+  bio              String   @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  courses          Course[] @relation("Course_teacher")
+}
+
 model User {
   id        String    @id @default(cuid())
   name      String    @default("")
   email     String    @unique @default("")
   password  String
-  posts     Post[]    @relation("Post_author")
   createdAt DateTime? @default(now())
-}
-
-model Post {
-  id       String  @id @default(cuid())
-  title    String  @default("")
-  content  String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  author   User?   @relation("Post_author", fields: [authorId], references: [id])
-  authorId String? @map("author")
-  tags     Tag[]   @relation("Post_tags")
-
-  @@index([authorId])
-}
-
-model Tag {
-  id    String @id @default(cuid())
-  name  String @default("")
-  posts Post[] @relation("Post_tags")
 }
