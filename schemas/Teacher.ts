@@ -15,7 +15,7 @@ export const Teacher = list({
       ui: { description: "Teacher's email address" },
     }),
     avatar: image({
-      storage: "teacher_images", // Define a storage configuration in Keystone config
+      storage: "teacher_images", 
       ui: { description: "Teacher's profile picture" },
     }),
     bio: document({

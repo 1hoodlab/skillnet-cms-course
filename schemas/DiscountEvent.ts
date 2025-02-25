@@ -1,12 +1,5 @@
 import { list } from "@keystone-6/core";
-import { allowAll } from "@keystone-6/core/access";
-import {
-  text,
-  integer,
-  timestamp,
-  relationship,
-  float,
-} from "@keystone-6/core/fields";
+import { text, timestamp, relationship, float } from "@keystone-6/core/fields";
 import { accessControl } from "./User";
 
 export const DiscountEvent = list({
